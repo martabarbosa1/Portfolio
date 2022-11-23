@@ -12,7 +12,7 @@ import seaborn as sns
 # nltk.download()
 # from wordcloud import WordCloud
 
-from streamlit-option-menu import option_menu
+from streamlit_option_menu import option_menu
 from PIL import Image
 
 # This code is different for each deployed app.
