@@ -1,35 +1,16 @@
 import pandas as pd
+import numpy as np
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 # import plotly.express as px
 
-# import nltk
-# nltk.download('punkt')
-# from wordcloud import WordCloud
+from wordcloud import WordCloud, ImageColorGenerator
 
-# import nltk
-# nltk.download()
-# from wordcloud import WordCloud
 
 from streamlit_option_menu import option_menu
 from PIL import Image
 
-# This code is different for each deployed app.
-CURRENT_THEME = "blue"
-IS_DARK_THEME = True
-EXPANDER_TEXT = """
-    This is a custom theme. You can enable it by copying the following code
-    to `.streamlit/config.toml`:
-    ```python
-    [theme]
-    primaryColor = "#E694FF"
-    backgroundColor = "#00172B"
-    secondaryBackgroundColor = "#0083B8"
-    textColor = "#C6CDD4"
-    font = "sans-serif"
-    ```
-    """
 
 st.set_page_config(page_title="Marta_Barbosa_app", layout="wide", menu_items=None)
 
@@ -53,27 +34,46 @@ if selected == 'Hi, I\'m Marta!':
             image1 = Image.open('./Images/Capturar1.JPG')
             st.image(image1, width = 500)
             
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2, gap = 'large')
         with col1:
             st.title("Soft-Skills")
+               
+            # Create text
+            text = 'curious curious curious responsible responsible responsible proactive proactive proactive keen_eye \
+            keen_eye teamwork teamwork teamwork adaptability adaptability Communication Communication creative creative creative creative \
+            problem_oriented problem_oriented listening listening listening critical_thinking critical_thinking critical_thinking planning planning Honesty Honesty'
+
+            # Create and generate a word cloud image:                   
+            cloud_mask = np.array(Image.open("./Images/cloud_sil.jpg"))
+            plt.imshow(cloud_mask)
+            plt.axis("off")
+
+            # Create wordcloud
+            wordcloud = WordCloud(background_color="white", 
+                      mask=cloud_mask,
+                      contour_width=1, 
+                      repeat=True, contour_color='white',
+                      min_font_size=3)
+
+            # Generate a wordcloud
+            wordcloud.generate(text)
+
+            # store to file
+            wordcloud.to_file("./Images/cloud_sil_wordcloud.png")
+
+            # show
+
+            plt.imshow(wordcloud)
+            plt.axis("off")
+            st.pyplot()
+      
             
-            text = 'curious, curious, curious, responsible, responsible, pro-active, pro-active, pro-active'
-            wordcloud = WordCloud(width=480, height=480, max_font_size=200, min_font_size=10)
-            wordcloud.generate_from_text(text)
-            plt.figure()
-            plt.imshow(wordcloud, interpolation="bilinear")
-            plt.margins(x=0, y=0)
-            plt.show()
+            
             
         with col2:
-            st.title("Hard-Skills")      
+            st.title("Tech-Skills")      
 
 if selected == 'Portfolio':
         st.title('This is my Portfolio')
         
-        
-        
-import streamlit as st
-import plotly.figure_factory as ff
-import numpy as np
 
